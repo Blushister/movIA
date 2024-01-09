@@ -5,14 +5,14 @@ import mysql from 'mysql2';
 
 dotenv.config();
 const port = 3000;
-const name = process.env.NAME;
-const version = process.env.VERSION;
+const name = 'movIA';
+const version = '1.0.0';
 
 const dbConfig = {
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
+    host: 'los-santos.fr',
+    user: 'moveia',
+    password: 'rqUuHDulPaQGePS',
+    database: 'moveia',
 };
 
 const connection = mysql.createConnection(dbConfig);

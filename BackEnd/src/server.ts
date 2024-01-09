@@ -1,54 +1,17 @@
 import cors from "cors";
 import dotenv from "dotenv";
-import express, { Request, Response } from "express";
-import mysql from "mysql2";
+import express from "express";
+import movieRoutes from "./routes/movieRoutes";
 
 dotenv.config();
-const port = 3001;
-const name = "movIA";
-const version = "1.0.0";
-
-const dbConfig = {
-  host: "los-santos.fr",
-  user: "moveia",
-  password: "rqUuHDulPaQGePS",
-  database: "moveia",
-};
-
-const connection = mysql.createConnection(dbConfig);
-
-connection.connect((err) => {
-  if (err) {
-    console.error("Error connecting to MariaDB:", err);
-    return;
-  }
-  console.log("Connected to MariaDB");
-});
 
 const server = express();
 server.use(cors());
 server.use(express.json());
 
-server.get("/", (_req: Request, res: Response) => {
-  res.send(`Api: ${name} \n version: ${version}`);
+server.use("/movies", movieRoutes);
 
-  /*const query = 'SELECT * FROM Movies';
-
-    connection.query(query, (err, results) => {
-        if (err) {
-            console.error('Error executing query:', err);
-            res.status(500).send('Internal Server Error');
-            return;
-        }
-        res.json(results);
-    });*/
-});
-
-process.on("SIGINT", () => {
-  connection.end();
-  process.exit();
-});
-
+const port = process.env.PORT || 3001;
 server.listen(port, () => {
-  console.log(`${name} on http://localhost:${port}/ `);
+  console.log(`Server running on http://localhost:${port}/`);
 });

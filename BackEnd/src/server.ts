@@ -4,7 +4,7 @@ import express, { Request, Response } from "express";
 import mysql from 'mysql2';
 
 dotenv.config();
-const port = 3000;
+const port = 3001;
 const name = 'movIA';
 const version = '1.0.0';
 
@@ -29,9 +29,9 @@ const server = express();
 server.use(cors());
 server.use(express.json());
 
-server.get('/', (_req: Request, res: Response) => { res.send(`Api: ${name} \n version: ${version}`)
+server.get('/', (_req: Request, res: Response) => { /*res.send(`Api: ${name} \n version: ${version}`)*/
 
-    /*const query = 'SELECT * FROM Movies';
+    const query = 'SELECT title FROM Movies LIMIT 10';
 
     connection.query(query, (err, results) => {
         if (err) {
@@ -40,7 +40,20 @@ server.get('/', (_req: Request, res: Response) => { res.send(`Api: ${name} \n ve
             return;
         }
         res.json(results);
-    });*/
+    });
+});
+
+server.get('/movies', (_req: Request, res: Response) => {
+    
+    const query = 'SELECT title FROM Movies LIMIT 10';
+    connection.query(query, (err, results) => {
+        if (err) {
+            console.error('Error executing query:', err);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        res.json(results);
+    });
 });
 
 process.on('SIGINT', () => {

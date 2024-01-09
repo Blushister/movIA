@@ -7,23 +7,48 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import { Link } from "@mui/material";
+import axios from "axios";
 
 export default function LoginForm() {
    const [showRegister, setShowRegister] = React.useState(false);
    const [nom, setNom] = React.useState("");
    const [prenom, setPrenom] = React.useState("");
-   const [dateNaissance, setDateNaissance] = React.useState("");
+   const [age, setAge] = React.useState("");
    const [email, setEmail] = React.useState("");
-   const [password, setPassword] = React.useState("");
+   const [motdepasse, setMotdepasse] = React.useState("");
 
-   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      alert("Success!");
-      localStorage.setItem("email", email);
-      window.location.href = "/Films";
-      console.log(
-         `Nom: ${nom}, Prénom: ${prenom}, Date de naissance: ${dateNaissance}, Email: ${email}, Password: ${password}`
-      );
+   const handleSignUp = async () => {
+      try {
+         const response = await axios.post("http://localhost:3001/create-user", {
+            nom,
+            prenom,
+            age, // Ajoutez un champ d'âge et de sexe si nécessaire
+            motdepasse,
+            email,
+         });
+         console.log(response);
+         alert("Inscription réussie !");
+         // window.location.href = "/login"; // Rediriger vers la page de connexion après l'inscription
+      } catch (error) {
+         console.error(error);
+         alert("Erreur d'inscription. Veuillez vérifier vos informations.");
+      }
+   };
+
+   const handleLogin = async () => {
+      try {
+         const response = await axios.post("http://localhost:3001/login", {
+            email,
+            motdepasse,
+         });
+         console.log(response.data);
+         alert("Success!");
+         // localStorage.setItem("email", email);
+         window.location.href = "/Films";
+      } catch (error) {
+         console.error(error);
+         alert("Erreur de connexion. Veuillez vérifier vos identifiants.");
+      }
    };
 
    if (showRegister) {
@@ -36,7 +61,7 @@ export default function LoginForm() {
                <Typography variant="h4" component="div" align="center" padding={2}>
                   Signup
                </Typography>
-               <form onSubmit={handleSubmit}>
+               <form onSubmit={handleSignUp}>
                   <Grid container spacing={1}>
                      <Grid item xs={12}>
                         <TextField
@@ -56,11 +81,11 @@ export default function LoginForm() {
                            onChange={(e) => setPrenom(e.target.value)}
                         />
                      </Grid>
-                     <Grid item xs={6}>
+                     {/* <Grid item xs={6}>
                         <label style={{ color: "#949494" }}>Date de naissance *</label>
-                     </Grid>
+                     </Grid> */}
                      <Grid item xs={12}>
-                        <TextField type="date" fullWidth required onChange={(e) => setDateNaissance(e.target.value)} />
+                        <TextField  label="Age" type="text" fullWidth required onChange={(e) => setAge(e.target.value)} />
                      </Grid>
 
                      <Grid item xs={12}>
@@ -78,7 +103,7 @@ export default function LoginForm() {
                            type="password"
                            fullWidth
                            required
-                           onChange={(e) => setPassword(e.target.value)}
+                           onChange={(e) => setMotdepasse(e.target.value)}
                         />
                      </Grid>
                      <Grid item xs={12}>
@@ -98,7 +123,7 @@ export default function LoginForm() {
                <Typography variant="h4" component="div" align="center" padding={2}>
                   Login
                </Typography>
-               <form onSubmit={handleSubmit}>
+               <form onSubmit={handleLogin}>
                   <Grid container spacing={2}>
                      <Grid item xs={12}>
                         <TextField
@@ -115,7 +140,7 @@ export default function LoginForm() {
                            type="password"
                            fullWidth
                            required
-                           onChange={(e) => setPassword(e.target.value)}
+                           onChange={(e) => setMotdepasse(e.target.value)}
                         />
                      </Grid>
                      <Grid item xs={12}>

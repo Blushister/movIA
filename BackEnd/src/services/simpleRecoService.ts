@@ -15,7 +15,7 @@ interface GlobalStats extends RowDataPacket {
 
 export const simpleRecoService = async (
   db: Pool,
-  genre: string | null = null
+  genres: string[] = []
 ): Promise<Movie[]> => {
   try {
     // Récupérer les statistiques globales des films
@@ -24,24 +24,31 @@ export const simpleRecoService = async (
       FROM Movies
     `);
     const { avg_rating: C, total_movies } = globalStats[0];
-    const m = total_movies * 0.95; // 95th percentile
+    const m = total_movies * 0.0; // 95th percentile
 
     // Construire la requête de base
     let query = `
-      SELECT Movies.title, Movies.vote_count, Movies.vote_average, GROUP_CONCAT(Genres.name SEPARATOR ', ') AS genres
+      SELECT Movies.movie_id,Movies.title, Movies.vote_count, Movies.vote_average, GROUP_CONCAT(Genres.name SEPARATOR ', ') AS genres
       FROM Movies
       JOIN MovieGenres ON Movies.movie_id = MovieGenres.movie_id
       JOIN Genres ON MovieGenres.genre_id = Genres.genre_id
       WHERE Movies.vote_count >= ?
-      GROUP BY Movies.movie_id
     `;
     const params: Array<number | string> = [m];
 
-    // Filtrer par genre si spécifié
-    if (genre) {
-      query += " HAVING genres LIKE ?";
-      params.push(`%${genre}%`);
+    // Filtrer par genres si spécifié
+    if (genres.length > 0) {
+      query += " AND (";
+      query += genres
+        .map((genre, index) => {
+          params.push(genre);
+          return `FIND_IN_SET(?, Genres.name) > 0`;
+        })
+        .join(" OR ");
+      query += ")";
     }
+
+    query += " GROUP BY Movies.movie_id";
 
     // Récupérer les films qualifiés
     const [movies] = await db.query<Movie[]>(query, params);
@@ -56,7 +63,6 @@ export const simpleRecoService = async (
 
     // Trier les films par score pondéré
     qualifiedMovies.sort((a, b) => b.weightedRating - a.weightedRating);
-    console.log(qualifiedMovies);
 
     // Retourner les 250 meilleurs films
     return qualifiedMovies.slice(0, 250);

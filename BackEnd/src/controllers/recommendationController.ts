@@ -7,7 +7,11 @@ export const recommendationsController = async (
   res: Response
 ) => {
   try {
-    const genres = req.query.genres as string;
+    // Extraire les genres de la requête et les transformer en tableau
+    const genresQuery = req.query.genres as string | undefined;
+    const genres = genresQuery ? genresQuery.split(",") : [];
+
+    // Appeler simpleRecoService avec le tableau de genres
     const recommendations = await simpleRecoService(db, genres);
     res.json(recommendations);
   } catch (error) {

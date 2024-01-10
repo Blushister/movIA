@@ -6,11 +6,11 @@ import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
 
 export default function Navbar() {
-   let email = localStorage.getItem("email");
+   // let email = localStorage.getItem("email");
 
    function handleLogout() {
-      localStorage.removeItem("email");
-      window.location.reload();
+      // localStorage.removeItem("email");
+      window.location.href = "/";
    }
 
 
@@ -20,12 +20,12 @@ export default function Navbar() {
             <Typography variant="h6" component="div">
                MovIA
             </Typography>
-            {email && <Typography component="div">Bienvenue, {email}</Typography>}
+            {/* {email && <Typography component="div">Bienvenue, {email}</Typography>}
             {email && (
                <Button color="inherit" onClick={handleLogout}>
                   Logout
                </Button>
-            )}
+            )} */}
          </Toolbar>
       </AppBar>
    );

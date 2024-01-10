@@ -45,10 +45,53 @@ server.get("/", (_req: Request, res: Response) => {
 });
 
 process.on("SIGINT", () => {
-  connection.end();
-  process.exit();
+   connection.end();
+   process.exit();
+});
+
+server.post("/create-user", async (req: Request, res: Response) => {
+   const { nom, prenom, age, motdepasse, email } = req.body;
+   if (!nom || !prenom || !motdepasse) {
+      return res.status(400).json({ error: "Missing required fields" });
+   }
+
+   const saltRounds = 10;
+   const hashedPassword = await bcrypt.hash(motdepasse, saltRounds);
+
+   const insertQuery = "INSERT INTO users (nom, prenom, age, motdepasse, email) VALUES (?, ?, ?, ?, ?)";
+   const values = [nom, prenom, age, hashedPassword, email];
+
+   try {
+      const [result] = await connection.promise().query(insertQuery, values);
+      return res.status(201).json({ message: "User created successfully", result });
+   } catch (error) {
+      console.error("Error executing query:", error);
+      return res.status(500).json({ error: "An error occurred while trying to create the user" });
+   }
+});
+
+server.post("/login", async (req: Request, res: Response) => {
+   const { email, motdepasse } = req.body;
+   if (!email || !motdepasse) {
+      return res.status(400).json({ error: "Missing required fields" });
+   }
+
+   const selectQuery = "SELECT * FROM users WHERE email = ?";
+   const values = [email];
+
+   try {
+      const [result] = await connection.promise().query(selectQuery, values);
+      if (Array.isArray(result) && result.length > 0) {
+         return res.status(201).json({ message: "User created successfully", result });
+      } else {
+         throw new Error("No user inserted");
+      }
+   } catch (error) {
+      console.error("Error executing query:", error);
+      return res.status(500).json({ error: "An error occurred while trying to create the user" });
+   }
 });
 
 server.listen(port, () => {
-  console.log(`${name} on http://localhost:${port}/ `);
+   console.log(`${name} on http://localhost:${port}/ `);
 });

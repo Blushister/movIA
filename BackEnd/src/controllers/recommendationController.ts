@@ -83,4 +83,8 @@ export const recommendationController = async (req: Request, res: Response) => {
     console.error("Erreur dans le contrôleur de recommandation", error);
     res.status(500).send("Internal Server Error");
   }
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> origin/devFront

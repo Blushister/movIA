@@ -15,7 +15,10 @@
     "@nanostores/react": "^0.4.1",
     "@prisma/client": "^4.11.0",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "axios": "^1.6.5",
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
     "bcrypt": "^5.1.1",

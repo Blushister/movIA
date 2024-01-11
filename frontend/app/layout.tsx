@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
+<<<<<<< Updated upstream
 import "./css/style.css";
+=======
+>>>>>>> Stashed changes
 import Navbar from "./composants/Navbar";
+import "./css/style.css";
 
 const poppins = Poppins({ subsets: ["latin"], weight: "400" });
 

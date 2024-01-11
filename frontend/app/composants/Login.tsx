@@ -1,5 +1,9 @@
 "use client";
+
+import { Button, Card, CardContent, Checkbox, FormControl, FormControlLabel, Grid, InputLabel, Link, MenuItem, Select, TextField, Typography } from "@/node_modules/@mui/material/index";
+import axios from "@/node_modules/axios/index";
 import * as React from "react";
+<<<<<<< Updated upstream
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -8,6 +12,8 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import { Checkbox, FormControl, FormControlLabel, InputLabel, Link, MenuItem, Select } from "@mui/material";
 import axios from "axios";
+=======
+>>>>>>> Stashed changes
 
 export default function LoginForm() {
    const [showRegister, setShowRegister] = React.useState(false);
@@ -119,7 +125,7 @@ export default function LoginForm() {
                            type="text"
                            fullWidth
                            required
-                           onChange={(e) => setNom(e.target.value)}
+                           onChange={(e:any) => setNom(e.target.value)}
                         />
                      </Grid>
                      <Grid item xs={12}>
@@ -128,7 +134,7 @@ export default function LoginForm() {
                            type="text"
                            fullWidth
                            required
-                           onChange={(e) => setPrenom(e.target.value)}
+                           onChange={(e:any) => setPrenom(e.target.value)}
                         />
                      </Grid>
                      <Grid item xs={12}>
@@ -137,7 +143,11 @@ export default function LoginForm() {
                            type="text"
                            fullWidth
                            required
+<<<<<<< Updated upstream
                            onChange={(e) => setAge(e.target.value)}
+=======
+                           onChange={(e:any) => setAge(e.target.value)}
+>>>>>>> Stashed changes
                         />
                      </Grid>
                      <Grid item xs={12}>
@@ -162,7 +172,7 @@ export default function LoginForm() {
                            type="email"
                            fullWidth
                            required
-                           onChange={(e) => setEmail(e.target.value)}
+                           onChange={(e:any) => setEmail(e.target.value)}
                         />
                      </Grid>
                      <Grid item xs={12}>
@@ -171,7 +181,7 @@ export default function LoginForm() {
                            type="password"
                            fullWidth
                            required
-                           onChange={(e) => setMotdepasse(e.target.value)}
+                           onChange={(e:any) => setMotdepasse(e.target.value)}
                         />
                      </Grid>
 
@@ -184,7 +194,11 @@ export default function LoginForm() {
                                        checked={selectedGenres.some(
                                           (genreObj) => genreObj.id === Number(genre.genre_id)
                                        )}
+<<<<<<< Updated upstream
                                        onChange={(event) =>
+=======
+                                       onChange={(event:any) =>
+>>>>>>> Stashed changes
                                           handleCheckboxChange(event, { genre_id: genre.genre_id, name: genre.name })
                                        }
                                     />
@@ -219,7 +233,7 @@ export default function LoginForm() {
                            type="email"
                            fullWidth
                            required
-                           onChange={(e) => setEmail(e.target.value)}
+                           onChange={(e:any) => setEmail(e.target.value)}
                         />
                      </Grid>
                      <Grid item xs={12}>
@@ -228,7 +242,7 @@ export default function LoginForm() {
                            type="password"
                            fullWidth
                            required
-                           onChange={(e) => setMotdepasse(e.target.value)}
+                           onChange={(e:any) => setMotdepasse(e.target.value)}
                         />
                      </Grid>
                      <Grid item xs={12}>

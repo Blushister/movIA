@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 import { Card, Grid, CardContent, Typography, Button, FormControlLabel, Checkbox } from "@mui/material";
+=======
+import { Button, Card, Checkbox, FormControlLabel, Grid } from "@/node_modules/@mui/material/index";
+>>>>>>> Stashed changes
 import React, { useEffect, useState } from "react";
 import LoginForm from "./Login";
 
@@ -25,7 +29,11 @@ export default function Genres() {
                      control={
                         <Checkbox
                            checked={selectedGenres.includes(genre)}
+<<<<<<< Updated upstream
                            onChange={(event) => handleCheckboxChange(event, genre)}
+=======
+                           onChange={(event:any) => handleCheckboxChange(event, genre)}
+>>>>>>> Stashed changes
                         />
                      }
                      label={genre.name}

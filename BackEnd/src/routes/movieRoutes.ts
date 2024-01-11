@@ -1,8 +1,8 @@
 import express from "express";
-import { recommendationsController } from "../controllers/recommendationController";
+import { recommendationController } from "../controllers/recommendationController";
 
 const router = express.Router();
 
-router.get("/recommendations", recommendationsController);
+router.get("/recommendations", recommendationController);
 
 export default router;

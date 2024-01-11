@@ -13,7 +13,7 @@ interface GlobalStats extends RowDataPacket {
   total_movies: number;
 }
 
-export const simpleRecoService = async (
+export const genresRecommendation = async (
   db: Pool,
   genres: string[] = []
 ): Promise<Movie[]> => {

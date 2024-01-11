@@ -13,6 +13,56 @@ interface GlobalStats extends RowDataPacket {
   total_movies: number;
 }
 
+interface UserRatedMovie extends RowDataPacket {
+  movie_id: number;
+  note: number;
+}
+
+interface SimilarMovie extends RowDataPacket {
+  neighbor_movie_id: number;
+  similarity_score: number;
+}
+
+export const OverviewRecommendation = async (
+  db: Pool,
+  user_id: number
+): Promise<number[]> => {
+  try {
+    // Récupérer les films notés par l'utilisateur avec une note >= 5
+    const [userRatedMovies] = await db.query<UserRatedMovie[]>(
+      `
+      SELECT movie_id
+      FROM MovieUsers
+      WHERE user_id = ? AND note >= 5
+    `,
+      [user_id]
+    );
+
+    // Trouver des films similaires pour chaque film bien noté
+    let similarMoviesIds = new Set<number>();
+    for (const ratedMovie of userRatedMovies) {
+      const [similarMovies] = await db.query<SimilarMovie[]>(
+        `
+        SELECT neighbor_movie_id
+        FROM MoviesMovies
+        WHERE movie_id = ?
+        ORDER BY similarity_score DESC
+      `,
+        [ratedMovie.movie_id]
+      );
+      similarMovies.forEach((movie) =>
+        similarMoviesIds.add(movie.neighbor_movie_id)
+      );
+    }
+
+    // Retourner les IDs des films similaires
+    return Array.from(similarMoviesIds);
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 export const genresRecommendation = async (
   db: Pool,
   genres: string[] = []

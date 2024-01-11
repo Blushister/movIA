@@ -8,7 +8,7 @@ interface UserRecommendation {
 
 export const getUserBasedRecommendations = async (
   db: Pool,
-  id: number,
+  user_id: number,
   age: number,
   gender: string
 ): Promise<UserRecommendation[]> => {

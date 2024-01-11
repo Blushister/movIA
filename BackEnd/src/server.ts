@@ -1,100 +1,54 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express, { Request, Response } from "express";
-import mysql from "mysql2";
-import axios from "axios";
-import bcrypt from "bcrypt";
+import movieRoutes from "./routes/movieRoutes";
+import pool from "./db";
+import userRoutes from "./routes/userRoutes";
 
 dotenv.config();
 
 const server = express();
 server.use(cors());
 server.use(express.json());
+server.use("/movies", movieRoutes);
+server.use("/", userRoutes);
 
 const port = process.env.PORT;
-const name = "movIA";
-const version = "1.0.0";
 
-const dbConfig = {
-   host: "los-santos.fr",
-   user: "moveia",
-   password: "rqUuHDulPaQGePS",
-   database: "moveia",
-};
-
-const connection = mysql.createConnection(dbConfig);
-
-connection.connect((err) => {
-   if (err) {
-      console.error("Error connecting to MariaDB:", err);
-      return;
-   }
-   console.log("Connected to MariaDB");
-});
-
-server.get("/", (_req: Request, res: Response) => {
-   res.send(`Api: ${name} \n version: ${version}`);
-
-   /*const query = 'SELECT * FROM Movies';
-
-    connection.query(query, (err, results) => {
-        if (err) {
-            console.error('Error executing query:', err);
-            res.status(500).send('Internal Server Error');
-            return;
-        }
-        res.json(results);
-    });*/
-});
-
-process.on("SIGINT", () => {
-   connection.end();
-   process.exit();
-});
-
-server.post("/create-user", async (req: Request, res: Response) => {
-   const { nom, prenom, age, motdepasse, email } = req.body;
-   if (!nom || !prenom || !motdepasse) {
-      return res.status(400).json({ error: "Missing required fields" });
-   }
-
-   const saltRounds = 10;
-   const hashedPassword = await bcrypt.hash(motdepasse, saltRounds);
-
-   const insertQuery = "INSERT INTO users (nom, prenom, age, motdepasse, email) VALUES (?, ?, ?, ?, ?)";
-   const values = [nom, prenom, age, hashedPassword, email];
-
+async function getGenres() {
    try {
-      const [result] = await connection.promise().query(insertQuery, values);
-      return res.status(201).json({ message: "User created successfully", result });
+      const [rows] = await pool.query("SELECT * FROM Genres");
+      return rows;
    } catch (error) {
       console.error("Error executing query:", error);
-      return res.status(500).json({ error: "An error occurred while trying to create the user" });
+      throw error;
    }
-});
-
-server.post("/login", async (req: Request, res: Response) => {
-   const { email, motdepasse } = req.body;
-   if (!email || !motdepasse) {
-      return res.status(400).json({ error: "Missing required fields" });
-   }
-
-   const selectQuery = "SELECT * FROM users WHERE email = ?";
-   const values = [email];
-
+}
+server.get("/genres", async (req, res) => {
    try {
-      const [result] = await connection.promise().query(selectQuery, values);
-      if (Array.isArray(result) && result.length > 0) {
-         return res.status(201).json({ message: "User created successfully", result });
-      } else {
-         throw new Error("No user inserted");
-      }
+      const genres = await getGenres();
+      return res.json(genres);
    } catch (error) {
-      console.error("Error executing query:", error);
-      return res.status(500).json({ error: "An error occurred while trying to create the user" });
+      console.error("Error getting genres:", error);
+      return res.status(500).json({ error: "An error occurred while trying to get the genres" });
    }
 });
+
+server.post('/user-genre', async (req, res) => {
+   const { user_id, genres } = req.body;
+  
+   try {
+     const sqlInsert = "INSERT INTO UserGenre (user_id, genre_id) VALUES (?, ?)";
+     const values = [user_id, genres];
+     await pool.query(sqlInsert, values);
+     res.status(201).json({ message: "UserGenre created successfully" });
+   } catch (error) {
+     console.error("Error executing query:", error);
+     res.status(500).json({ error: "An error occurred while trying to create the UserGenre" });
+   }
+  });
+
 
 server.listen(port, () => {
-   console.log(`${name} on http://localhost:${port}/ `);
+   console.log(`Server running on http://localhost:${port}/`);
 });

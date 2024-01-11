@@ -1,5 +1,5 @@
 import { OkPacket } from "mysql2";
-import pool from "../db";
+import pool from "../../db";
 import bcrypt from "bcrypt";
 
 // CONNECTION

@@ -14,10 +14,6 @@
   "dependencies": {
     "@nanostores/react": "^0.4.1",
     "@prisma/client": "^4.11.0",
-<<<<<<< Updated upstream
-    "axios": "^1.6.5",
-=======
->>>>>>> Stashed changes
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",

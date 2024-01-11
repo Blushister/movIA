@@ -1,13 +1,8 @@
 "use client";
-import * as React from "react";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
+import { Button, Card, CardContent, Grid, TextField, Typography } from "@/node_modules/@mui/material/index";
+import axios from "@/node_modules/axios/index";
 import { Checkbox, FormControl, FormControlLabel, InputLabel, Link, MenuItem, Select } from "@mui/material";
-import axios from "axios";
+import * as React from "react";
 
 export default function LoginForm() {
    const [showRegister, setShowRegister] = React.useState(false);
@@ -119,7 +114,7 @@ export default function LoginForm() {
                            type="text"
                            fullWidth
                            required
-                           onChange={(e) => setNom(e.target.value)}
+                           onChange={(e:any) => setNom(e.target.value)}
                         />
                      </Grid>
                      <Grid item xs={12}>
@@ -128,7 +123,7 @@ export default function LoginForm() {
                            type="text"
                            fullWidth
                            required
-                           onChange={(e) => setPrenom(e.target.value)}
+                           onChange={(e:any) => setPrenom(e.target.value)}
                         />
                      </Grid>
                      <Grid item xs={12}>
@@ -137,7 +132,7 @@ export default function LoginForm() {
                            type="text"
                            fullWidth
                            required
-                           onChange={(e) => setAge(e.target.value)}
+                           onChange={(e:any) => setAge(e.target.value)}
                         />
                      </Grid>
                      <Grid item xs={12}>
@@ -162,7 +157,7 @@ export default function LoginForm() {
                            type="email"
                            fullWidth
                            required
-                           onChange={(e) => setEmail(e.target.value)}
+                           onChange={(e:any) => setEmail(e.target.value)}
                         />
                      </Grid>
                      <Grid item xs={12}>
@@ -171,7 +166,7 @@ export default function LoginForm() {
                            type="password"
                            fullWidth
                            required
-                           onChange={(e) => setMotdepasse(e.target.value)}
+                           onChange={(e:any) => setMotdepasse(e.target.value)}
                         />
                      </Grid>
 
@@ -184,7 +179,7 @@ export default function LoginForm() {
                                        checked={selectedGenres.some(
                                           (genreObj) => genreObj.id === Number(genre.genre_id)
                                        )}
-                                       onChange={(event) =>
+                                       onChange={(event:any) =>
                                           handleCheckboxChange(event, { genre_id: genre.genre_id, name: genre.name })
                                        }
                                     />
@@ -219,7 +214,7 @@ export default function LoginForm() {
                            type="email"
                            fullWidth
                            required
-                           onChange={(e) => setEmail(e.target.value)}
+                           onChange={(e:any) => setEmail(e.target.value)}
                         />
                      </Grid>
                      <Grid item xs={12}>
@@ -228,7 +223,7 @@ export default function LoginForm() {
                            type="password"
                            fullWidth
                            required
-                           onChange={(e) => setMotdepasse(e.target.value)}
+                           onChange={(e:any) => setMotdepasse(e.target.value)}
                         />
                      </Grid>
                      <Grid item xs={12}>

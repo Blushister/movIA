@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import cors from "cors";
 import dotenv from "dotenv";
 import express, { Request, Response } from "express";
@@ -28,25 +29,13 @@ connection.connect((err) => {
 const server = express();
 server.use(cors());
 server.use(express.json());
+server.use('/posters', express.static('posters'));
 
-server.get("/", (_req: Request, res: Response) => {
-  res.send(`Api: ${name} \n version: ${version}`);
-
-  /*const query = 'SELECT * FROM Movies';
-
-    connection.query(query, (err, results) => {
-        if (err) {
-            console.error('Error executing query:', err);
-            res.status(500).send('Internal Server Error');
-            return;
-        }
-        res.json(results);
-    });*/
-});
+server.get("/", (_req: Request, res: Response) => { res.send(`Api: ${name} \n version: ${version}`); });
 
 server.get('/movies', (_req: Request, res: Response) => {
     
-    const query = 'SELECT title FROM Movies LIMIT 10';
+    const query = 'SELECT movie_id, title FROM Movies LIMIT 10';
     connection.query(query, (err, results) => {
         if (err) {
             console.error('Error executing query:', err);
@@ -57,9 +46,76 @@ server.get('/movies', (_req: Request, res: Response) => {
     });
 });
 
+// Nouvelle route pour servir les affiches de films
+server.get('/posters/:movieId', (req: Request, res: Response) => {
+  const movieId = req.params.movieId;
+  const posterPath = `./posters/${movieId}.jpg`;
+
+  res.sendFile(posterPath, { root: '.' }, (err) => {
+    if (err) {
+      console.error('Error sending file:', err);
+      if (!res.headersSent) {
+        res.status(404).send('Poster not found');
+      }
+    }
+  });
+});
+
 process.on("SIGINT", () => {
   connection.end();
   process.exit();
+});
+
+server.post("/create-user", async (req: Request, res: Response) => {
+  const { nom, prenom, age, motdepasse, email } = req.body;
+  if (!nom || !prenom || !motdepasse) {
+    return res.status(400).json({ error: "Missing required fields" });
+  }
+
+  const saltRounds = 10;
+  const hashedPassword = await bcrypt.hash(motdepasse, saltRounds);
+
+  const insertQuery =
+    "INSERT INTO users (nom, prenom, age, motdepasse, email) VALUES (?, ?, ?, ?, ?)";
+  const values = [nom, prenom, age, hashedPassword, email];
+
+  try {
+    const [result] = await connection.promise().query(insertQuery, values);
+    return res
+      .status(201)
+      .json({ message: "User created successfully", result });
+  } catch (error) {
+    console.error("Error executing query:", error);
+    return res
+      .status(500)
+      .json({ error: "An error occurred while trying to create the user" });
+  }
+});
+
+server.post("/login", async (req: Request, res: Response) => {
+  const { email, motdepasse } = req.body;
+  if (!email || !motdepasse) {
+    return res.status(400).json({ error: "Missing required fields" });
+  }
+
+  const selectQuery = "SELECT * FROM users WHERE email = ?";
+  const values = [email];
+
+  try {
+    const [result] = await connection.promise().query(selectQuery, values);
+    if (Array.isArray(result) && result.length > 0) {
+      return res
+        .status(201)
+        .json({ message: "User created successfully", result });
+    } else {
+      throw new Error("No user inserted");
+    }
+  } catch (error) {
+    console.error("Error executing query:", error);
+    return res
+      .status(500)
+      .json({ error: "An error occurred while trying to create the user" });
+  }
 });
 
 server.listen(port, () => {

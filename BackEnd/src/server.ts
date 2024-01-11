@@ -8,7 +8,7 @@ dotenv.config();
 const server = express();
 server.use(cors());
 server.use(express.json());
-server.use("/movies", movieRoutes);
+server.use(movieRoutes);
 
 const port = process.env.PORT || 3001;
 server.listen(port, () => {

@@ -1,9 +1,9 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express, { Request, Response } from "express";
-import movieRoutes from "./routes/movieRoutes";
 import pool from "./db";
 import userRoutes from "./routes/userRoutes";
+import movieRoutes from "./routes/movieRoutes";
 
 dotenv.config();
 

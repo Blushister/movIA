@@ -3,7 +3,6 @@ import { RowDataPacket } from "mysql2"; // Importez le type approprié pour votr
 import db from "../db";
 import { genresRecommendation } from "../services/ContentBasedRecoService";
 
-<<<<<<< Updated upstream
 // Importez d'autres services de recommandation si nécessaire
 
 export const recommendationController = async (req: Request, res: Response) => {
@@ -84,16 +83,4 @@ export const recommendationController = async (req: Request, res: Response) => {
     console.error("Erreur dans le contrôleur de recommandation", error);
     res.status(500).send("Internal Server Error");
   }
-=======
-export const recommendationsController = async (req: Request, res: Response) => {
-   try {
-      const genres = req.query.genres as string;
-      const recommendations = await simpleRecoService(db, genres);
-
-      return res.json(recommendations);
-   } catch (error) {
-      return res.status(500).send("Erreur interne du serveur");
-   }
->>>>>>> Stashed changes
 };
-

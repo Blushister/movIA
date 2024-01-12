@@ -86,7 +86,7 @@ export const updateUser = async (req: any, res: any) => {
       }
    }
 
-   const updateQuery = `UPDATE Users SET ${updateFields.join(", ")} WHERE id = ?`;
+   const updateQuery = `UPDATE Users SET ${updateFields.join(", ")} WHERE user_id = ?`;
    updateValues.push(id);
 
    try {
@@ -106,7 +106,7 @@ export const deleteUser = async (req: any, res: any) => {
    //    return res.status(400).json({ error: "Missing required fields" });
    // }
 
-   const deleteQuery = "DELETE FROM Users WHERE id = ?";
+   const deleteQuery = "DELETE FROM Users WHERE user_id = ?";
    const values = [id];
 
    try {
@@ -115,5 +115,25 @@ export const deleteUser = async (req: any, res: any) => {
    } catch (error) {
       console.error("Error executing query:", error);
       return res.status(500).json({ error: "An error occurred while trying to delete the user" });
+   }
+};
+
+export const getUserInfo = async (req: any, res: any) => {
+   const { email } = req.params;
+
+   const selectQuery = "SELECT * FROM Users WHERE email = ?";
+   const values = [email];
+
+   try {
+      const [result] = await pool.query(selectQuery, values);
+      console.log(result);
+      if (Array.isArray(result) && result.length > 0) {
+         return res.status(200).json({ message: "User information retrieved successfully", result });
+      } else {
+         throw new Error("No user found");
+      }
+   } catch (error) {
+      console.error("Error executing query:", error);
+      return res.status(500).json({ error: "An error occurred while trying to retrieve the user information" });
    }
 };

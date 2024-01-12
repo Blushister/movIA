@@ -22,4 +22,5 @@ router.get('/posters/:movieId', (req: Request, res: Response) => {
     });
 });
 
+
 export default router;

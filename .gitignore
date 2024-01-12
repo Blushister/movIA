@@ -1,0 +1,56 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+**/node_modules/
+**/.pnp
+**/.pnp.js
+
+# Yarn / PNP
+**/.yarn/install-state.gz
+**/.yarn/unplugged/
+**/.yarn/build-state.yml
+**/.yarn/cache/
+
+# Testing
+**/coverage/
+
+# Next.js build output
+**/.next/
+**/out/
+
+# Production build folder
+**/build/
+
+# Miscellaneous
+**/.DS_Store
+**/*.pem
+
+# Debug logs
+**/npm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+
+# Local environment variable files
+**/.env*.local
+
+# Vercel deployment files
+**/.vercel
+
+# TypeScript build artifacts
+**/*.tsbuildinfo
+**/next-env.d.ts
+
+# Exclude IDE and OS specific files
+**/.idea/
+**/.vscode/
+**/*.sublime-workspace
+**/*.sublime-project
+**/*.swp
+**/*.swo
+**/*.bak
+**/*.tmp
+
+# OS generated files
+**/Thumbs.db
+**/ehthumbs.db
+**/*.log

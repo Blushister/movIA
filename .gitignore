@@ -32,6 +32,7 @@
 
 # Local environment variable files
 **/.env*.local
+**/.env
 
 # Vercel deployment files
 **/.vercel

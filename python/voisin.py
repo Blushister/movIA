@@ -5,9 +5,9 @@ import pandas as pd
 
 # Informations de connexion sans spécifier la base de données
 db_config = {
-    'user': 'moveia',
-    'password': 'rqUuHDulPaQGePS',
-    'host': 'los-santos.fr',
+    'user': '',
+    'password': '',
+    'host': '',
     'raise_on_warnings': True
 }
 

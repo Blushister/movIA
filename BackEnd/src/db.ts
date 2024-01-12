@@ -4,7 +4,6 @@ import mysql from "mysql2/promise";
 dotenv.config();
 // Configuration de la connexion à la base de données
 const pool = mysql.createPool({
-<<<<<<< HEAD
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
@@ -12,7 +11,6 @@ const pool = mysql.createPool({
 });
 
 export default pool;
-=======
    host: process.env.DB_HOST,
    user: process.env.DB_USER,
    password: process.env.DB_PASSWORD,
@@ -22,4 +20,3 @@ export default pool;
 
 
 export default  pool ;
->>>>>>> origin/devFront

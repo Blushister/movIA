@@ -18,16 +18,81 @@ Développer un prototype end-to-end de recommandation de films qui utilise les d
 - Système de recommandation basé sur les préférences saisies.
 
 ## Technologies Utilisées
-[Lister ici les technologies/frameworks utilisés dans le projet]
+- **Node.js** : Environnement d'exécution JavaScript côté serveur.
+- **Express** : Framework pour applications web Node.js.
+- **Next.js** : Framework React pour production.
+- **Material-UI** : Bibliothèque de composants React pour un design rapide et facile.
+- **MariaDB** : Système de gestion de base de données relationnelle.
+- **bcrypt** : Bibliothèque pour le hachage de mots de passe.
+- **Axios** : Client HTTP basé sur les promesses pour le navigateur et Node.js.
+
 
 ## Installation
-[Instructions d'installation et de configuration]
+
+Pour installer les dépendances nécessaires au projet, suivez les étapes ci-dessous :
+
+1. **Installer les dépendances du Backend**
+   - Naviguez jusqu'au dossier `BackEnd` de votre projet.
+   - Exécutez la commande suivante :
+     ```bash
+     npm install
+     ```
+   - Ceci installera toutes les dépendances nécessaires pour le backend.
+
+2. **Installer les dépendances du Frontend**
+   - Naviguez jusqu'au dossier `frontend` de votre projet.
+   - Exécutez la commande suivante :
+     ```bash
+     npm install
+     ```
+   - Ceci installera toutes les dépendances nécessaires pour le frontend.
+
+Assurez-vous d'avoir Node.js installé sur votre système pour exécuter ces commandes.
+
 
 ## Utilisation
-[Guide d'utilisation du prototype]
+
+Pour démarrer l'application, vous aurez besoin de lancer à la fois le serveur backend et le serveur frontend. Voici les étapes à suivre :
+
+1. **Démarrer le serveur Backend**
+   - Ouvrez un terminal.
+   - Naviguez jusqu'au dossier `BackEnd` de votre projet.
+   - Exécutez la commande suivante :
+     ```bash
+     npm run dev
+     ```
+   - Le serveur backend devrait maintenant être en cours d'exécution.
+
+2. **Démarrer le serveur Frontend**
+   - Ouvrez un autre terminal.
+   - Naviguez jusqu'au dossier `frontend` de votre projet.
+   - Exécutez la commande suivante :
+     ```bash
+     npm run dev
+     ```
+   - Le serveur frontend devrait maintenant être en cours d'exécution.
+
+Une fois les deux serveurs démarrés, vous pouvez accéder à l'application en ouvrant votre navigateur et en vous rendant à l'adresse suivante : [https://localhost:3000](https://localhost:3000).
+
+Assurez-vous que les ports nécessaires sont libres sur votre machine pour permettre aux serveurs de démarrer sans problème.
 
 ## Contribution
-[Informations sur la manière de contribuer au projet]
+
+Ce projet est le fruit du travail collaboratif d'une équipe de cinq membres. Si vous souhaitez contribuer, veuillez prendre en compte les contributions précédentes de l'équipe et suivre les lignes directrices de contribution établies. Pour toute question ou suggestion, n'hésitez pas à contacter l'un des membres de l'équipe :
+
+- **Helosia** : [Profil GitHub](#)
+- **Arnaud** : [Profil GitHub](#)
+- **Leandro** : [Profil GitHub](#)
+- **Bruno** : [Profil GitHub](#)
+- **Benjamin** : [Profil GitHub](#)
+
+Nous encourageons les contributions constructives et sommes ouverts aux nouvelles idées qui pourraient améliorer le projet. Merci de respecter le travail de chacun et de contribuer de manière positive à l'écosystème du projet.
+
 
 ## Licence
-[Informations sur la licence du projet]
+
+Ce projet a été réalisé pour l'entreprise [Jellysmack](https://jellysmack.com/fr/) sous la supervision de Serge Guillemart, dans le cadre de nos études au centre de formation [Aflokkat](https://aflokkat.com).
+
+Tous les droits relatifs au code et au contenu de ce projet sont la propriété exclusive de Jellysmack. Aucune utilisation, reproduction, modification ou distribution n'est autorisée sans le consentement explicite de Jellysmack.
+
+Pour toute question concernant les droits d'utilisation, de modification ou de distribution, veuillez contacter Jellysmack directement. Ce projet est le résultat d'un effort collaboratif et est destiné à des fins éducatives dans le cadre des programmes d'étude d'Aflokkat, avec une utilisation spécifiquement accordée à Jellysmack.

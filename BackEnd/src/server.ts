@@ -10,10 +10,10 @@ const name = "movIA";
 const version = "1.0.0";
 
 const dbConfig = {
-  host: "los-santos.fr",
-  user: "moveia",
-  password: "rqUuHDulPaQGePS",
-  database: "moveia",
+  host: "",
+  user: "",
+  password: "",
+  database: "",
 };
 
 const connection = mysql.createConnection(dbConfig);

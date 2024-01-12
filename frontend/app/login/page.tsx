@@ -8,8 +8,10 @@ export default function page() {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            height: "100vh",
+            height: "110vh",
             flexDirection: "column",
+            width: "60%",
+            margin: " 0 auto",
          }}
       >
          <LoginForm />

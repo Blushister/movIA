@@ -1,8 +1,20 @@
 "use client";
-import { Button, Card, CardContent, Grid, TextField, Typography } from "@/node_modules/@mui/material/index";
+import {
+   Button,
+   Card,
+   CardContent,
+   Grid,
+   IconButton,
+   InputAdornment,
+   TextField,
+   Typography,
+} from "@/node_modules/@mui/material/index";
 import axios from "@/node_modules/axios/index";
 import { Checkbox, FormControl, FormControlLabel, InputLabel, Link, MenuItem, Select } from "@mui/material";
 import * as React from "react";
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 export default function LoginForm() {
    const [showRegister, setShowRegister] = React.useState(false);
@@ -12,6 +24,8 @@ export default function LoginForm() {
    const [email, setEmail] = React.useState("");
    const [motdepasse, setMotdepasse] = React.useState("");
    const [sexe, setSexe] = React.useState("");
+   const [showPassword, setShowPassword] = React.useState(false);
+
    const [selectedGenres, setSelectedGenres] = React.useState<{ id: number; name: string }[]>([]);
    const [genres, setGenres] = React.useState<
       {
@@ -52,6 +66,7 @@ export default function LoginForm() {
          console.log(response.data);
          alert("Success!");
          localStorage.setItem("email", email);
+         localStorage.setItem("name", nom);
          window.location.href = "/films";
       } catch (error) {
          console.error(error);
@@ -96,49 +111,61 @@ export default function LoginForm() {
       setSexe(event.target.value);
    };
 
+   const handleClickShowPassword = () => {
+      setShowPassword(!showPassword);
+   };
+
+   const handleMouseDownPassword = (event: any) => {
+      event.preventDefault();
+   };
+
    if (showRegister) {
       return (
-         <Card style={{ padding: "10px", backgroundColor: "white", width: "45%", overflow: "auto" }}>
+         <Card style={{ padding: "10px", backgroundColor: "white", width: "60%", overflow: "auto", height: "auto" }}>
             <Grid item xs={1} display="flex" justifyContent="flex-end">
                <Button onClick={() => setShowRegister(false)}>Fermer</Button>
             </Grid>
             <CardContent>
-               <Typography variant="h4" component="div" align="center" padding={2}>
+               <Typography variant="h4" component="div" align="center" paddingBottom={2}>
                   Signup
                </Typography>
                <form onSubmit={handleSignUp}>
                   <Grid container spacing={1}>
                      <Grid item xs={12}>
                         <TextField
+                           size="small"
                            label="Nom"
                            type="text"
                            fullWidth
                            required
-                           onChange={(e:any) => setNom(e.target.value)}
+                           onChange={(e: any) => setNom(e.target.value)}
                         />
                      </Grid>
                      <Grid item xs={12}>
                         <TextField
+                           size="small"
                            label="Prénom"
                            type="text"
                            fullWidth
                            required
-                           onChange={(e:any) => setPrenom(e.target.value)}
+                           onChange={(e: any) => setPrenom(e.target.value)}
                         />
                      </Grid>
                      <Grid item xs={12}>
                         <TextField
+                           size="small"
                            label="Age"
                            type="text"
                            fullWidth
                            required
-                           onChange={(e:any) => setAge(e.target.value)}
+                           onChange={(e: any) => setAge(e.target.value)}
                         />
                      </Grid>
                      <Grid item xs={12}>
                         <FormControl fullWidth required>
                            <InputLabel id="genre-label">Sexe</InputLabel>
                            <Select
+                              size="small"
                               labelId="genre-label"
                               id="genre-select"
                               value={sexe}
@@ -157,44 +184,74 @@ export default function LoginForm() {
                            type="email"
                            fullWidth
                            required
-                           onChange={(e:any) => setEmail(e.target.value)}
+                           onChange={(e: any) => setEmail(e.target.value)}
+                           InputProps={{
+                              endAdornment: (
+                                 <InputAdornment position="end" sx={{ paddingRight: "6px" }}>
+                                    <MailOutlineIcon />
+                                 </InputAdornment>
+                              ),
+                           }}
                         />
                      </Grid>
                      <Grid item xs={12}>
                         <TextField
+                           size="small"
                            label="Password"
-                           type="password"
+                           type={showPassword ? "text" : "password"}
                            fullWidth
                            required
-                           onChange={(e:any) => setMotdepasse(e.target.value)}
+                           onChange={(e: any) => setMotdepasse(e.target.value)}
+                           InputProps={{
+                              endAdornment: (
+                                 <InputAdornment position="end">
+                                    <IconButton
+                                       aria-label="toggle"
+                                       onClick={handleClickShowPassword}
+                                       onMouseDown={handleMouseDownPassword}
+                                    >
+                                       {showPassword ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                 </InputAdornment>
+                              ),
+                           }}
                         />
                      </Grid>
 
-                     <Grid container spacing={2}>
-                        {genres.map((genre, index) => (
-                           <Grid item xs={4} key={index}>
-                              <FormControlLabel
-                                 control={
-                                    <Checkbox
-                                       checked={selectedGenres.some(
-                                          (genreObj) => genreObj.id === Number(genre.genre_id)
-                                       )}
-                                       onChange={(event:any) =>
-                                          handleCheckboxChange(event, { genre_id: genre.genre_id, name: genre.name })
-                                       }
-                                    />
-                                 }
-                                 // label={`${genre.name} ${genre.genre_id}`} // Affichez l'ID et le nom du genre
-                                 label={`${genre.name}`}
-                              />
-                           </Grid>
-                        ))}
+                     <Grid item xs={12}>
+                        <Typography variant="h6" component="div" align="center" padding={2}>
+                           Choisissez un ou plusieurs genres de votre préférence.
+                        </Typography>
                      </Grid>
 
-                     <Button type="submit" variant="outlined" fullWidth onSubmit={handleSignUp}>
-                        Valider
-                     </Button>
+                     {genres.map((genre, index) => (
+                        <Grid item xs={3} key={index}>
+                           <FormControlLabel
+                              control={
+                                 <Checkbox
+                                    size="small"
+                                    color="secondary"
+                                    checked={selectedGenres.some((genreObj) => genreObj.id === Number(genre.genre_id))}
+                                    onChange={(event: any) =>
+                                       handleCheckboxChange(event, { genre_id: genre.genre_id, name: genre.name })
+                                    }
+                                 />
+                              }
+                              label={`${genre.name}`}
+                           />
+                        </Grid>
+                     ))}
                   </Grid>
+                  <br />
+                  <Button
+                     type="submit"
+                     variant="outlined"
+                     fullWidth
+                     onSubmit={handleSignUp}
+                     sx={{ color: "black", bgcolor: "#e7ecef", borderColor: "#212529" }}
+                  >
+                     Valider
+                  </Button>
                </form>{" "}
             </CardContent>
          </Card>
@@ -206,7 +263,7 @@ export default function LoginForm() {
                <Typography variant="h4" component="div" align="center" padding={2}>
                   Login
                </Typography>
-               <form onSubmit={handleLogin}>
+               <form onSubmit={handleLogin} style={{ paddingBottom: "1rem" }}>
                   <Grid container spacing={2}>
                      <Grid item xs={12}>
                         <TextField
@@ -214,30 +271,62 @@ export default function LoginForm() {
                            type="email"
                            fullWidth
                            required
-                           onChange={(e:any) => setEmail(e.target.value)}
+                           onChange={(e: any) => setEmail(e.target.value)}
+                           InputProps={{
+                              endAdornment: (
+                                 <InputAdornment position="end" sx={{ paddingRight: "6px" }}>
+                                    <MailOutlineIcon />
+                                 </InputAdornment>
+                              ),
+                           }}
                         />
                      </Grid>
+
                      <Grid item xs={12}>
                         <TextField
                            label="Password"
-                           type="password"
+                           type={showPassword ? "text" : "password"}
                            fullWidth
                            required
-                           onChange={(e:any) => setMotdepasse(e.target.value)}
+                           onChange={(e: any) => setMotdepasse(e.target.value)}
+                           InputProps={{
+                              endAdornment: (
+                                 <InputAdornment position="end">
+                                    <IconButton
+                                       aria-label="toggle"
+                                       onClick={handleClickShowPassword}
+                                       onMouseDown={handleMouseDownPassword}
+                                    >
+                                       {showPassword ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                 </InputAdornment>
+                              ),
+                           }}
                         />
                      </Grid>
-                     <Grid item xs={12}>
-                        <Button type="submit" variant="outlined" fullWidth>
+                     <Grid item xs={8}>
+                        <Button
+                           type="submit"
+                           variant="outlined"
+                           fullWidth
+                           sx={{ color: "black", bgcolor: "#e7ecef", borderColor: "#212529" }}
+                        >
                            Se connecter
+                        </Button>
+                     </Grid>
+                     <Grid item xs={4}>
+                        <Button
+                           type="submit"
+                           variant="outlined"
+                           fullWidth
+                           sx={{ color: "#212529", borderColor: "#212529" }}
+                           onClick={() => setShowRegister(true)}
+                        >
+                           S'inscrire !
                         </Button>
                      </Grid>
                   </Grid>
                </form>
-               <Grid item display="flex" justifyContent="center" paddingTop={3}>
-                  <Link align="center" onClick={() => setShowRegister(true)}>
-                     S'inscrire
-                  </Link>
-               </Grid>
             </CardContent>
          </Card>
       );

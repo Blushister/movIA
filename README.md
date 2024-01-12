@@ -80,11 +80,11 @@ Assurez-vous que les ports nécessaires sont libres sur votre machine pour perme
 
 Ce projet est le fruit du travail collaboratif d'une équipe de cinq membres. Si vous souhaitez contribuer, veuillez prendre en compte les contributions précédentes de l'équipe et suivre les lignes directrices de contribution établies. Pour toute question ou suggestion, n'hésitez pas à contacter l'un des membres de l'équipe :
 
-- **Helosia** : [Profil GitHub](#)
-- **Arnaud** : [Profil GitHub](#)
-- **Leandro** : [Profil GitHub](#)
-- **Bruno** : [Profil GitHub](#)
-- **Benjamin** : [Profil GitHub](#)
+- **Helosia** : [Profil GitHub](https://github.com/Heloisabressanin)
+- **Arnaud** : [Profil GitHub](https://github.com/St4r4x)
+- **Leandro** : [Profil GitHub](https://github.com/lchantoiseau)
+- **Bruno** : [Profil GitHub](https://github.com/Palleca)
+- **Benjamin** : [Profil GitHub](https://github.com/Blushister)
 
 Nous encourageons les contributions constructives et sommes ouverts aux nouvelles idées qui pourraient améliorer le projet. Merci de respecter le travail de chacun et de contribuer de manière positive à l'écosystème du projet.
 
